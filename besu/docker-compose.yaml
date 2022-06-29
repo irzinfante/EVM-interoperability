@@ -1,0 +1,62 @@
+version: "3.6"
+
+services:
+    VAL_1:
+        image: irzinfante/besu:v21.1.1_ibft-reject-empty-blocks
+        container_name: VAL_1
+        volumes:
+            - ./VAL_1/database:/var/besu/database
+            - ./VAL_1/config:/var/besu/config
+            - ./VAL_1/keys:/var/besu/keys
+        command: besu --config-file=/var/besu/config/config.toml
+        network_mode: "host"
+        environment:
+            - BESU_P2P_PORT=30001
+
+    VAL_2:
+        image: irzinfante/besu:v21.1.1_ibft-reject-empty-blocks
+        container_name: VAL_2
+        volumes:
+            - ./VAL_2/database:/var/besu/database
+            - ./VAL_2/config:/var/besu/config
+            - ./VAL_2/keys:/var/besu/keys
+        command: besu --config-file=/var/besu/config/config.toml
+        network_mode: "host"
+        environment:
+            - BESU_P2P_PORT=30002
+
+    VAL_3:
+        image: irzinfante/besu:v21.1.1_ibft-reject-empty-blocks
+        container_name: VAL_3
+        volumes:
+            - ./VAL_3/database:/var/besu/database
+            - ./VAL_3/config:/var/besu/config
+            - ./VAL_3/keys:/var/besu/keys
+        command: besu --config-file=/var/besu/config/config.toml
+        network_mode: "host"
+        environment:
+            - BESU_P2P_PORT=30003
+
+    VAL_4:
+        image: irzinfante/besu:v21.1.1_ibft-reject-empty-blocks
+        container_name: VAL_4
+        volumes:
+            - ./VAL_4/database:/var/besu/database
+            - ./VAL_4/config:/var/besu/config
+            - ./VAL_4/keys:/var/besu/keys
+        command: besu --config-file=/var/besu/config/config.toml
+        network_mode: "host"
+        environment:
+            - BESU_P2P_PORT=30004
+
+    REG_1:
+        image: irzinfante/besu:v21.1.1_ibft-reject-empty-blocks
+        container_name: REG_1
+        volumes:
+            - ./REG_1/database:/var/besu/database
+            - ./REG_1/config:/var/besu/config
+            - ./REG_1/keys:/var/besu/keys
+        command: besu --config-file=/var/besu/config/config.toml
+        network_mode: "host"
+        environment:
+            - BESU_P2P_PORT=30005
