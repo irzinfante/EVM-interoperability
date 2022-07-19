@@ -1,0 +1,16 @@
+{
+  "name": "evm-interoperability",
+  "description": "Interoperabilidad entre redes blockchain EVM compatibles",
+  "version": "1.0.0",
+  "author": "Iker Ruiz de Infante Gonzalez",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "compile": "hardhat compile"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^1.0.2",
+    "@nomiclabs/hardhat-etherscan": "^3.1.0",
+    "dotenv": "^16.0.1",
+    "hardhat": "^2.10.1"
+  }
+}
