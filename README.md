@@ -42,3 +42,53 @@ Por último levantamos la red ejecutando el comando
 ```sh
 docker-compose up -d
 ```
+
+## Creación del token ERC-20 para la interoperabilidad
+
+En este repositorio el directorio `hardhat` contiene los smart contracts y configuraciones para compilar y desplegar el token ERC-20. Desde el directorio base del proyecto nos situamos en el directorio `hardhat` con
+
+```sh
+cd hardhat
+```
+
+La compilación y el despliegue se hacen usando **Node.js** (se recomienda usar **npm 7** o posterior). Para configurar el entorno de Node.js ejecutamos
+
+```sh
+npm install
+```
+Antes de continuar con la compilación y el despliegue, creamos el archivo `.env` con el siguiente contenido:
+
+```dosini
+MNEMONIC = # String con las palabras del mnemonic de una HD Wallet
+BESU_LOCAL_URL = "http://127.0.0.1:8545"
+BESU_LOCAL_ID = 657665
+ETHEREUM_GOERLI_URL = # String con la URL de conexión a un nodo de la red Görli
+BSC_TESTNET_URL = # String con la URL de conexión a un nodo de la tesnet de BSC
+BSCSCAN_API_KEY = # String con un api-key de BSCScan (https://bscscan.com/myapikey)
+```
+
+El smart contract del token se encuentra en [`contracts/token/EVMtoken.sol`](/hardhat/contracts/token/EVMtoken.sol). Para compilarlo ejecutamos
+
+```sh
+npx hardhat compile
+```
+
+El resultado de la compilación se encuentra en el directorio `artifacts/contracts/token/EVMtoken.sol/`. El despliegue del smart contract lo haremos usando la segunda address que se genera con el HD Wallet, partiendo del mnemonic proporcionado, usando la ruta de derivación de Ethereum (m/44'/60'/0'/0). Para desplegar el token ERC-20 en la testnet de BSC ejecutamos
+
+```sh
+npx hardhat run --network bsc_testnet ./scripts/deployEVMtoken.js
+```
+
+Si el despliegue se ha compleado correctamente se devuelve el mensaje
+
+```
+A token for interoperability deployed to: 0x...
+```
+
+donde `0x...` es el realidad el address en el que se ha desplegado el smart contract, es decir, el address del token.
+
+Por último, podemos verificar el contrato en BSCScan ejecutando
+
+```sh
+npx hardhat verify --network bsc_testnet --contract contracts/token/EVMtoken.sol:EVMtoken 0x...
+```
