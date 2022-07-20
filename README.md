@@ -51,7 +51,7 @@ En este repositorio el directorio `hardhat` contiene los smart contracts y confi
 cd hardhat
 ```
 
-La compilación y el despliegue se hacen usando **Node.js** (se recomienda usar **npm 7** o posterior). Para configurar el entorno de Node.js ejecutamos
+La compilación y el despliegue se hacen usando el framework **Hardhat** (se recomienda usar **npm 7** o posterior). Para configurar el entorno de Node.js ejecutamos
 
 ```sh
 npm install
