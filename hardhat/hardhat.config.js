@@ -7,7 +7,8 @@ const {
   BESU_LOCAL_ID,
   ETHEREUM_GOERLI_URL,
   BSC_TESTNET_URL,
-  BSCSCAN_API_KEY
+  BSCSCAN_API_KEY,
+  ETHERSCAN_API_KEY
 } = process.env;
 
 const ACCOUNTS = {
@@ -50,7 +51,10 @@ module.exports = {
     }
   },
   etherscan: {
-    apiKey: BSCSCAN_API_KEY
+    apiKey: {
+      goerli: ETHERSCAN_API_KEY,
+      bscTestnet: BSCSCAN_API_KEY
+    }
   },
   mocha: {
     timeout: 0
