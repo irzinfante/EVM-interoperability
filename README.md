@@ -65,6 +65,7 @@ BESU_LOCAL_ID = 657665
 ETHEREUM_GOERLI_URL = # String con la URL de conexión a un nodo de la red Görli
 BSC_TESTNET_URL = # String con la URL de conexión a un nodo de la tesnet de BSC
 BSCSCAN_API_KEY = # String con un api-key de BSCScan (https://bscscan.com/myapikey)
+ETHERSCAN_API_KEY = # String con un api-key de Etherscan (https://etherscan.io/myapikey)
 ```
 
 El smart contract del token se encuentra en [`contracts/token/EVMtoken.sol`](/hardhat/contracts/token/EVMtoken.sol). Para compilarlo ejecutamos
@@ -73,22 +74,31 @@ El smart contract del token se encuentra en [`contracts/token/EVMtoken.sol`](/ha
 npx hardhat compile
 ```
 
-El resultado de la compilación se encuentra en el directorio `artifacts/contracts/token/EVMtoken.sol/`. El despliegue del smart contract lo haremos usando la segunda address que se genera con el HD Wallet, partiendo del mnemonic proporcionado, usando la ruta de derivación de Ethereum (m/44'/60'/0'/0). Para desplegar el token ERC-20 en la testnet de BSC ejecutamos
+El resultado de la compilación se encuentra en el directorio `artifacts/contracts/token/EVMtoken.sol/`. El despliegue del smart contract lo haremos usando la segunda address que se genera con el HD Wallet, partiendo del mnemonic proporcionado, usando la ruta de derivación de Ethereum (m/44'/60'/0'/0). Para desplegar el token ERC-20 en la testnet de BSC, haciendo un pre-acuñado de 10M unidades del token, ejecutamos
 
 ```sh
-npx hardhat run --network bsc_testnet ./scripts/deployEVMtoken.js
+npx hardhat run --network bsc_testnet ./scripts/deployEVMtokenPreMint.js
 ```
 
 Si el despliegue se ha compleado correctamente se devuelve el mensaje
 
 ```
 A token for interoperability deployed to: 0x...
+Preminted 10,000,000 EVM tokens
 ```
 
-donde `0x...` es el realidad el address en el que se ha desplegado el smart contract, es decir, el address del token.
+donde `0x...` es el address en el que se ha desplegado el smart contract, es decir, el address del token.
 
-Por último, podemos verificar el contrato en BSCScan ejecutando
+Igualmente, para desplegar el token ERC-20 en la testnet Görli de Ethereum y en la red local Besu, sin pre-acuñar el token, ejecutamos los siguientes dos comandos:
 
 ```sh
-npx hardhat verify --network bsc_testnet --contract contracts/token/EVMtoken.sol:EVMtoken 0x...
+npx hardhat run --network ethereum_goerli ./scripts/deployEVMtoken.js
+npx hardhat run --network besu_local ./scripts/deployEVMtoken.js
+```
+
+Por último, podemos verificar el contrato en BSCScan o Etherscan ejecutando los siguientes comandos, donde `0x...` es el address del contrato desplegado en cada una de la redes,
+
+```sh
+npx hardhat verify --network bsc_testnet --contract contracts/token/EVMtoken.sol:EVMtoken 0x... 10000000
+npx hardhat verify --network ethereum_goerli --contract contracts/token/EVMtoken.sol:EVMtoken 0x... 0
 ```
