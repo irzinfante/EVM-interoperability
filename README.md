@@ -102,3 +102,60 @@ Por último, podemos verificar el contrato en BSCScan o Etherscan ejecutando los
 npx hardhat verify --network bsc_testnet --contract contracts/token/EVMtoken.sol:EVMtoken 0x... 10000000
 npx hardhat verify --network ethereum_goerli --contract contracts/token/EVMtoken.sol:EVMtoken 0x... 0
 ```
+
+## Despliegue y configuración de smart contracts de los bridges
+
+En este repositorio el directorio `hardhat` contiene los smart contracts y configuraciones para compilar y desplegar los contratos de los bridges. Desde el directorio base del proyecto nos situamos en el directorio `hardhat` con
+
+```sh
+cd hardhat
+```
+
+El smart contract del bridge se encuentra en [`contracts/bridge/Bridge.sol`](/hardhat/contracts/bridge/Bridge.sol). Para compilarlo ejecutamos
+
+```sh
+npx hardhat compile
+```
+
+Para desplegar el contrato hay que pasar como parámetro al constructor la dirección del token EVM en cada red. Para ello, en el directorio actual, creamos el archivo `tokenAddress.json` con el siguiente contenido:
+
+```json
+{
+  "BSC_TESTNET_EMV_TOKEN_ADDRESS": "0x...",
+  "GOERLI_TESTNET_EMV_TOKEN_ADDRESS": "0x...",
+  "BESU_LOCAL_EMV_TOKEN_ADDRESS": "0x..."
+}
+```
+
+donde para cada `0x...` hay que indicar la address del token EVM en la red correspondiente. Para desplegar el contrato en las distintas redes ejecutamos estos comandos:
+
+ - **BSC testnet**
+  ```sh
+  npx hardhat run --network bsc_testnet ./scripts/deployBridgeToBSCTestnet.js
+  ```
+
+ - **Göerli testnet**
+  ```sh
+  npx hardhat run --network ethereum_goerli ./scripts/deployBridgeToGoerliTestnet.js
+  ```
+
+ - **Besu local**
+  ```sh
+  npx hardhat run --network besu_local ./scripts/deployBridgeToBesuLocal.js
+  ```
+
+El mensaje de respuesta de cada uno de los comandos informa de la address en la que se ha desplegado el contrato.
+
+Por último, para verificar los smart contracts en las testnet de BSC y Ethereum podemos ejecutar los comandos
+
+ - **BSC testnet**
+  ```sh
+  npx hardhat verify --network bsc_testnet --contract contracts/bridge/Bridge.sol:Bridge 0x.. 0x..
+  ```
+
+ - **Göerli testnet**
+  ```sh
+  npx hardhat verify --network ethereum_goerli --contract contracts/bridge/Bridge.sol:Bridge 0x.. 0x..
+  ```
+
+donde, en cada comando, el primer `0x...` debe ser la address donde se ha desplegado el contrato del bridge y el segundo `0x...` debe ser la address del token EVM en la red correspondiente.
