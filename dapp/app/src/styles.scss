@@ -1,0 +1,119 @@
+body {
+    background-color: #333;
+    color: #eee;
+}
+
+#main-container {
+    margin-top: 10rem;
+    text-align: center;
+
+    button {
+        background-color: #5E5DF0;
+        border-radius: 999px;
+        box-shadow: #5E5DF0 0 10px 20px -10px;
+        box-sizing: border-box;
+        color: #FFFFFF;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 24px;
+        opacity: 1;
+        outline: 0 solid transparent;
+        padding: 8px 18px;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        width: fit-content;
+        word-break: break-word;
+        border: 0;
+        margin: 0 3rem;
+
+        &:disabled {
+            background-color: #5E5D5D;
+            box-shadow: unset;
+            cursor: not-allowed;
+        }
+    }
+
+    .bridge-container {
+        width: 30%;
+        margin: auto;
+        text-align: left;
+
+        .box {
+            background-color: #222;
+            border-radius: 1.25rem;
+            padding: 1.25rem 2.5rem;
+
+            .amount {
+                display: flex;
+                flex-flow: row nowrap;
+                align-items: center;
+
+                input {
+                    width: 100%;
+                    border: 0;
+                    border-bottom: 2px solid #eee;
+                    flex: 1 1 auto;
+                    outline: 0;
+                    font-size: 1.3rem;
+                    padding: 7px 0;
+                    background: transparent;
+                    color: inherit;
+                    margin-right: 1.875rem;
+                    -moz-appearance: textfield;
+
+                    &.ng-invalid {
+                        border-bottom-color: #933;
+                        color: #933;
+
+                        &::placeholder {
+                            color: #933;
+                        }
+                    }
+                }
+
+                input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+            }
+
+            .final-amount {
+                display: flex;
+                flex-flow: row nowrap;
+                align-items: center;
+
+                .final-balance {
+                    width: 100%;
+                    flex: 1 1 auto;
+                    outline: 0;
+                    padding: 1rem 0 7px;
+                    font-size: 1.3rem;
+                    margin-right: 1.875rem;
+                }
+            }
+
+            select {
+                width: 25%;
+                border: 0;
+                border-bottom: 2px solid #eee;
+                flex: 1 1 auto;
+                outline: 0;
+                padding: 7px 0;
+                background: transparent;
+                color: inherit;
+
+                option {
+                    color: black;
+                }
+            }
+        }
+
+        .align-center {
+            text-align: center;
+            padding: 0.75rem 0;
+        }
+    }
+
+}

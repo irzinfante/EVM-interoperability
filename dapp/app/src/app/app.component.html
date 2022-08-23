@@ -1,0 +1,57 @@
+<div id="main-container" class="content">
+    <h1>EVM token bridge</h1>
+
+    <ng-template [ngIf]="web3js" [ngIfElse]="disconnected">
+        <form class="bridge-container" [formGroup]="bridgeForm" (ngSubmit)="sendTokens()">
+            <span>Connected address: {{ currentAddress }}</span>
+            <div id="origin" class="box">
+                <div class="balance">
+                    <span><strong>Current balance:</strong> {{ originBalance }} EVM</span>
+                </div>
+                <div class="amount">
+                    <input type="text" placeholder="0.0" formControlName="amount" (input)="checkAllowance()">
+                    <div class="network">
+                        {{ originNetworkName }}
+                    </div>
+                </div>
+            </div>
+            <div class="align-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#eee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <polyline points="19 12 12 19 5 12"></polyline>
+                </svg>
+            </div>
+            <span>Target address: {{ currentAddress }}</span>
+            <div id="target" class="box">
+                <div class="balance">
+                    <span><strong>Current balance:</strong> {{ targetBalance }} EVM</span>
+                </div>
+                <div class="final-amount">
+                    <div class="final-balance">
+                        <span><strong>Final balance:</strong> {{ +targetBalance + +Number(bridgeForm.get('amount').value) }} EVM</span>
+                    </div>
+                    <select (change)="changeTarget()" formControlName="targetNetworkId">
+                        <option hidden selected value="0">Network...</option>
+                        <option [value]="network.id" *ngFor="let network of targetNetworks">{{ network.name }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="align-center">
+                <button type="button" *ngIf="!allowanceValid" (click)="approveTokens()">
+                    Approve tokens
+                </button>
+                <button type="submit" [disabled]="bridgeForm.invalid || !allowanceValid">
+                    Send tokens
+                </button>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #disconnected>
+        <div class="wallet-connect">
+            <button (click)="connect()">
+                Connect your wallet
+            </button>
+        </div>
+    </ng-template>
+</div>
