@@ -33,7 +33,7 @@ module.exports = {
   networks: {
     besu_local: {
       url: BESU_LOCAL_URL,
-      gasPrice: 1000,
+      gasPrice: 1000000,
       accounts: ACCOUNTS
     },
     ethereum_goerli: {
