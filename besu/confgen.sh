@@ -48,7 +48,7 @@ echo '    "ibft2": {' >> /tmp/genesis.json
 echo '      "blockperiodseconds": 1,' >> /tmp/genesis.json
 echo '      "epochlength": 30000,' >> /tmp/genesis.json
 echo '      "requesttimeoutseconds": 3,' >> /tmp/genesis.json
-echo '      "miningbeneficiary": "0xd331C36e919f773f0D9B5cAbff5F80C0793a3DB8"' >> /tmp/genesis.json
+echo '      "miningbeneficiary": "'$1'"' >> /tmp/genesis.json
 echo '    }' >> /tmp/genesis.json
 echo '  },' >> /tmp/genesis.json
 echo '  "nonce": "0x0",' >> /tmp/genesis.json
@@ -57,7 +57,7 @@ echo '  "gasLimit": "0x989680",' >> /tmp/genesis.json
 echo '  "difficulty": "0x1",' >> /tmp/genesis.json
 echo '  "mixHash": "0x63746963616c2062797a616e74696e65206661756c7420746f6c6572616e6365",' >> /tmp/genesis.json
 echo '  "alloc": {' >> /tmp/genesis.json
-echo '    "0xd331C36e919f773f0D9B5cAbff5F80C0793a3DB8": {' >> /tmp/genesis.json
+echo '    "'$1'": {' >> /tmp/genesis.json
 echo '      "comment": "EVM-interoperability Preprovisioning Account",' >> /tmp/genesis.json
 echo '      "balance": "0x115EEC47F6CF7E35000000"' >> /tmp/genesis.json
 echo '    }' >> /tmp/genesis.json
