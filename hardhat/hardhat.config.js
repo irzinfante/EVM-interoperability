@@ -33,19 +33,16 @@ module.exports = {
   networks: {
     besu_local: {
       url: BESU_LOCAL_URL,
-      chainId: parseInt(BESU_LOCAL_ID),
       gasPrice: 1000,
       accounts: ACCOUNTS
     },
     ethereum_goerli: {
       url: ETHEREUM_GOERLI_URL,
-      chainId: 5,
       gasPrice: 1000000000,
       accounts: ACCOUNTS
     },
     bsc_testnet: {
       url: BSC_TESTNET_URL,
-      chainId: 97,
       gasPrice: 1000000000,
       accounts: ACCOUNTS
     }

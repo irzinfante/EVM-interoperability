@@ -61,7 +61,6 @@ Antes de continuar con la compilación y el despliegue, creamos el archivo `.env
 ```dosini
 MNEMONIC = # String con las palabras del mnemonic de una HD Wallet
 BESU_LOCAL_URL = "http://127.0.0.1:8545"
-BESU_LOCAL_ID = 657665
 ETHEREUM_GOERLI_URL = # String con la URL de conexión a un nodo de la red Görli
 BSC_TESTNET_URL = # String con la URL de conexión a un nodo de la tesnet de BSC
 BSCSCAN_API_KEY = # String con un api-key de BSCScan (https://bscscan.com/myapikey)
