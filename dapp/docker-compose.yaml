@@ -1,0 +1,18 @@
+version: "3.6"
+
+services:
+    app:
+        build:
+            context: .
+            args:
+                - BSC_TESTNET_NODE=$BSC_TESTNET_NODE
+                - GOERLI_TESTNET_NODE=$GOERLI_TESTNET_NODE
+                - BESU_LOCAL_NODE=$BESU_LOCAL_NODE
+                - BSC_BRIDGE_ADDRESS=$BSC_BRIDGE_ADDRESS
+                - GOERLI_BRIDGE_ADDRESS=$GOERLI_BRIDGE_ADDRESS
+                - BESU_BRIDGE_ADDRESS=$BESU_BRIDGE_ADDRESS
+                - BSC_EVM_TOKEN_ADDRESS=$BSC_EVM_TOKEN_ADDRESS
+                - GOERLI_EVM_TOKEN_ADDRESS=$GOERLI_EVM_TOKEN_ADDRESS
+                - BESU_EVM_TOKEN_ADDRESS=$BESU_EVM_TOKEN_ADDRESS
+        container_name: bridge_dapp
+        network_mode: "host"

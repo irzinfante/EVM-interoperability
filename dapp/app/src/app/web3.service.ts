@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 import { Subject } from 'rxjs';
-import { BSC_TESTNET_NODE, GOERLI_TESTNET_NODE, BESU_LOCAL_NODE } from '../environments/NODES.env';
+import { environment } from '../environments/environment';
 import { EVMToken_abi } from '../abis/EVMToken.abi.js';
 import { Bridge_abi } from '../abis/Bridge.abi.js';
 
@@ -34,9 +34,9 @@ export class Web3Service {
             }
         });
 
-        this.web3BSC = new Web3(BSC_TESTNET_NODE);
-        this.web3Goerli = new Web3(GOERLI_TESTNET_NODE);
-        this.web3Besu = new Web3(BESU_LOCAL_NODE);
+        this.web3BSC = new Web3(environment.BSC_TESTNET_NODE);
+        this.web3Goerli = new Web3(environment.GOERLI_TESTNET_NODE);
+        this.web3Besu = new Web3(environment.BESU_LOCAL_NODE);
     }
 
     async connectAccount() {

@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, AbstractControl, FormGroup, Validators, ValidationErrors } from '@angular/forms';
 import { Web3Service } from './web3.service';
+import { environment } from '../environments/environment';
 import { BSC_TESTNET_NETWORK, GOERLI_TESTNET_NETWORK, BESU_LOCAL_NETWORK } from './constants';
-import { BSC_EVM_TOKEN_ADDRESS, GOERLI_EVM_TOKEN_ADDRESS, BESU_EVM_TOKEN_ADDRESS } from '../environments/TOKEN_ADDRESSES.env';
-import { BSC_BRIDGE_ADDRESS, GOERLI_BRIDGE_ADDRESS, BESU_BRIDGE_ADDRESS } from '../environments/BRIDGE_ADDRESSES.env';
 
 @Component({
   selector: 'app-root',
@@ -80,17 +79,17 @@ export class AppComponent {
     async updateOrigin() {
         switch(this.currentNetworkId) {
             case BSC_TESTNET_NETWORK.id: {
-                await this.web3Service.balanceOf(this.currentAddress, BSC_EVM_TOKEN_ADDRESS, this.web3Service.web3BSC).then(result => { this.originBalance = parseFloat(result); });
+                await this.web3Service.balanceOf(this.currentAddress, environment.BSC_EVM_TOKEN_ADDRESS, this.web3Service.web3BSC).then(result => { this.originBalance = parseFloat(result); });
                 this.originNetworkName = BSC_TESTNET_NETWORK.name;
                 break;
             }
             case GOERLI_TESTNET_NETWORK.id: {
-                await this.web3Service.balanceOf(this.currentAddress, GOERLI_EVM_TOKEN_ADDRESS, this.web3Service.web3Goerli).then(result => { this.originBalance = parseFloat(result); });
+                await this.web3Service.balanceOf(this.currentAddress, environment.GOERLI_EVM_TOKEN_ADDRESS, this.web3Service.web3Goerli).then(result => { this.originBalance = parseFloat(result); });
                 this.originNetworkName = GOERLI_TESTNET_NETWORK.name;
                 break;
             }
             case BESU_LOCAL_NETWORK.id: {
-                await this.web3Service.balanceOf(this.currentAddress, BESU_EVM_TOKEN_ADDRESS, this.web3Service.web3Besu).then(result => { this.originBalance = parseFloat(result); });
+                await this.web3Service.balanceOf(this.currentAddress, environment.BESU_EVM_TOKEN_ADDRESS, this.web3Service.web3Besu).then(result => { this.originBalance = parseFloat(result); });
                 this.originNetworkName = BESU_LOCAL_NETWORK.name;
                 break;
             }
@@ -111,15 +110,15 @@ export class AppComponent {
     async updateTarget() {
         switch(parseInt(this.bridgeForm.value.targetNetworkId)) {
             case BSC_TESTNET_NETWORK.id: {
-                await this.web3Service.balanceOf(this.currentAddress, BSC_EVM_TOKEN_ADDRESS, this.web3Service.web3BSC).then(result => { this.targetBalance = parseFloat(result); });
+                await this.web3Service.balanceOf(this.currentAddress, environment.BSC_EVM_TOKEN_ADDRESS, this.web3Service.web3BSC).then(result => { this.targetBalance = parseFloat(result); });
                 break;
             }
             case GOERLI_TESTNET_NETWORK.id: {
-                await this.web3Service.balanceOf(this.currentAddress, GOERLI_EVM_TOKEN_ADDRESS, this.web3Service.web3Goerli).then(result => { this.targetBalance = parseFloat(result); });
+                await this.web3Service.balanceOf(this.currentAddress, environment.GOERLI_EVM_TOKEN_ADDRESS, this.web3Service.web3Goerli).then(result => { this.targetBalance = parseFloat(result); });
                 break;
             }
             case BESU_LOCAL_NETWORK.id: {
-                await this.web3Service.balanceOf(this.currentAddress, BESU_EVM_TOKEN_ADDRESS, this.web3Service.web3Besu).then(result => { this.targetBalance = parseFloat(result); });
+                await this.web3Service.balanceOf(this.currentAddress, environment.BESU_EVM_TOKEN_ADDRESS, this.web3Service.web3Besu).then(result => { this.targetBalance = parseFloat(result); });
                 break;
             }
             default: {
@@ -156,7 +155,7 @@ export class AppComponent {
     async checkAllowance() {
         const isNumber = /^(0|([1-9][0-9]*))(\.[0-9]*[1-9])?$/.test(this.bridgeForm.value.amount);
         if(isNumber && this.currentNetworkId == BSC_TESTNET_NETWORK.id) {
-            await this.web3Service.allowance(BSC_EVM_TOKEN_ADDRESS, this.currentAddress, BSC_BRIDGE_ADDRESS).then(result => { this.allowance = parseFloat(result); });
+            await this.web3Service.allowance(environment.BSC_EVM_TOKEN_ADDRESS, this.currentAddress, environment.BSC_BRIDGE_ADDRESS).then(result => { this.allowance = parseFloat(result); });
             if(this.allowance < parseFloat(this.bridgeForm.value.amount)) {
                 this.allowanceValid = false;
             } else {
@@ -170,7 +169,7 @@ export class AppComponent {
 
     approveTokens() {
         if(this.currentNetworkId == BSC_TESTNET_NETWORK.id) {
-            this.web3Service.approve(BSC_EVM_TOKEN_ADDRESS, BSC_BRIDGE_ADDRESS, this.bridgeForm.value.amount)
+            this.web3Service.approve(environment.BSC_EVM_TOKEN_ADDRESS, environment.BSC_BRIDGE_ADDRESS, this.bridgeForm.value.amount)
             .then((receipt) => {
                 this.checkAllowance();
             });
@@ -180,21 +179,21 @@ export class AppComponent {
     sendTokens() {
         switch(this.currentNetworkId) {
             case BSC_TESTNET_NETWORK.id: {
-                this.web3Service.depositTokens(this.bridgeForm.value.amount, BSC_BRIDGE_ADDRESS, parseInt(this.bridgeForm.value.targetNetworkId))
+                this.web3Service.depositTokens(this.bridgeForm.value.amount, environment.BSC_BRIDGE_ADDRESS, parseInt(this.bridgeForm.value.targetNetworkId))
                 .then((receipt) => {
                     this.updateOrigin();
                 });
                 break;
             }
             case GOERLI_TESTNET_NETWORK.id: {
-                this.web3Service.burnTokens(this.bridgeForm.value.amount, GOERLI_BRIDGE_ADDRESS, parseInt(this.bridgeForm.value.targetNetworkId))
+                this.web3Service.burnTokens(this.bridgeForm.value.amount, environment.GOERLI_BRIDGE_ADDRESS, parseInt(this.bridgeForm.value.targetNetworkId))
                 .then((receipt) => {
                     this.updateOrigin();
                 });
                 break;
             }
             case BESU_LOCAL_NETWORK.id: {
-                this.web3Service.burnTokens(this.bridgeForm.value.amount, BESU_BRIDGE_ADDRESS, parseInt(this.bridgeForm.value.targetNetworkId))
+                this.web3Service.burnTokens(this.bridgeForm.value.amount, environment.BESU_BRIDGE_ADDRESS, parseInt(this.bridgeForm.value.targetNetworkId))
                 .then((receipt) => {
                     this.updateOrigin();
                 });
@@ -212,15 +211,15 @@ export class AppComponent {
         }
         switch(this.currentNetworkId) {
             case BSC_TESTNET_NETWORK.id: {
-                this.originBalanceEvent = this.web3Service.transferEvent(this.web3Service.web3BSC, BSC_EVM_TOKEN_ADDRESS, this.currentAddress);
+                this.originBalanceEvent = this.web3Service.transferEvent(this.web3Service.web3BSC, environment.BSC_EVM_TOKEN_ADDRESS, this.currentAddress);
                 break;
             }
             case GOERLI_TESTNET_NETWORK.id: {
-                this.originBalanceEvent = this.web3Service.transferEvent(this.web3Service.web3Goerli, GOERLI_EVM_TOKEN_ADDRESS, this.currentAddress);
+                this.originBalanceEvent = this.web3Service.transferEvent(this.web3Service.web3Goerli, environment.GOERLI_EVM_TOKEN_ADDRESS, this.currentAddress);
                 break;
             }
             case BESU_LOCAL_NETWORK.id: {
-                this.originBalanceEvent = this.web3Service.transferEvent(this.web3Service.web3Besu, BESU_EVM_TOKEN_ADDRESS, this.currentAddress);
+                this.originBalanceEvent = this.web3Service.transferEvent(this.web3Service.web3Besu, environment.BESU_EVM_TOKEN_ADDRESS, this.currentAddress);
                 break;
             }
             default: {
@@ -241,15 +240,15 @@ export class AppComponent {
         }
         switch(parseInt(this.bridgeForm.value.targetNetworkId)) {
             case BSC_TESTNET_NETWORK.id: {
-                this.targetBalanceEvent = this.web3Service.transferEvent(this.web3Service.web3BSC, BSC_EVM_TOKEN_ADDRESS, this.currentAddress);
+                this.targetBalanceEvent = this.web3Service.transferEvent(this.web3Service.web3BSC, environment.BSC_EVM_TOKEN_ADDRESS, this.currentAddress);
                 break;
             }
             case GOERLI_TESTNET_NETWORK.id: {
-                this.targetBalanceEvent = this.web3Service.transferEvent(this.web3Service.web3Goerli, GOERLI_EVM_TOKEN_ADDRESS, this.currentAddress);
+                this.targetBalanceEvent = this.web3Service.transferEvent(this.web3Service.web3Goerli, environment.GOERLI_EVM_TOKEN_ADDRESS, this.currentAddress);
                 break;
             }
             case BESU_LOCAL_NETWORK.id: {
-                this.targetBalanceEvent = this.web3Service.transferEvent(this.web3Service.web3Besu, BESU_EVM_TOKEN_ADDRESS, this.currentAddress);
+                this.targetBalanceEvent = this.web3Service.transferEvent(this.web3Service.web3Besu, environment.BESU_EVM_TOKEN_ADDRESS, this.currentAddress);
                 break;
             }
             default: {
