@@ -158,3 +158,42 @@ Por último, para verificar los smart contracts en las testnet de BSC y Ethereum
   ```
 
 donde, en cada comando, el primer `0x...` debe ser la address donde se ha desplegado el contrato del bridge y el segundo `0x...` debe ser la address del token EVM en la red correspondiente.
+
+## Configuración y despliegue de la dApp
+
+En este repositorio el directorio `dapp` contiene el codigo para desplegar la dApp. Desde el directorio base del proyecto nos situamos en el directorio `dapp` con
+
+```sh
+cd dapp
+```
+
+Antes de construir y desplegar la aplicación, cremos el archivo `.env` con el siguiente contenido:
+
+```dosini
+# NODES WS URL
+BSC_TESTNET_NODE=ws://...
+GOERLI_TESTNET_NODE=ws://...
+BESU_LOCAL_NODE=ws://127.0.0.1:8546
+
+# BRIDGE CONTRACTS ADDRESSES
+BSC_BRIDGE_ADDRESS=0x..
+GOERLI_BRIDGE_ADDRESS=0x..
+BESU_BRIDGE_ADDRESS=0x..
+
+# EVM TOKEN CONTRACTS ADDRESSES
+BSC_EVM_TOKEN_ADDRESS=0x..
+GOERLI_EVM_TOKEN_ADDRESS=0x..
+BESU_EVM_TOKEN_ADDRESS=0x..
+```
+
+donde sustituimos `ws://...` por la correspondiente URL del nodo con el esquema `ws` y `0x...` por la correspondiente address del smart contract del bridge o del token EVM para cada red.
+
+La aplicación se construye y despliega con **docker** y **docker-compose**. Para ello ejecutando el comando
+
+```sh
+docker-compose up -d
+```
+
+y esperamos a que el proceso de construcción finalice y contenedor de Docker esté corriendo. La dApp será accesible desde [http://localhost/](http://localhost/).
+
+> **_NOTA:_**  Esta dApp está hecha en **Angular 2** y se ejecuta íntegramente en el navegador. Por lo que para modificar las URLs de los nodos y/o las direcciones de los nodos se debe modificar el archivo `.env`, ejecutar el comando `docker-compose down` para parar el contenedor actual y ejecutar el comando `docker-compose up --build -d` para reconstruir la imagen de Docker y levantar el contenedor de nuevo.
