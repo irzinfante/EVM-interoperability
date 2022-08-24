@@ -1,0 +1,16 @@
+version: "3.6"
+
+services:
+    app:
+        build:
+            context: .
+        container_name: bridge_oracle
+        network_mode: "host"
+        environment:
+            - BSC_TESTNET_NODE=$BSC_TESTNET_NODE
+            - GOERLI_TESTNET_NODE=$GOERLI_TESTNET_NODE
+            - BESU_LOCAL_NODE=$BESU_LOCAL_NODE
+            - BSC_BRIDGE_ADDRESS=$BSC_BRIDGE_ADDRESS
+            - GOERLI_BRIDGE_ADDRESS=$GOERLI_BRIDGE_ADDRESS
+            - BESU_BRIDGE_ADDRESS=$BESU_BRIDGE_ADDRESS
+            - MNEMONIC=$MNEMONIC
