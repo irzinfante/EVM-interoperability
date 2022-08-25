@@ -75,7 +75,7 @@ El smart contract del token se encuentra en [`contracts/token/EVMtoken.sol`](/ha
 npx hardhat compile
 ```
 
-El resultado de la compilación se encuentra en el directorio `artifacts/contracts/token/EVMtoken.sol/`. El despliegue del smart contract lo haremos usando la segunda address que se genera con el HD Wallet, partiendo del mnemonic proporcionado, usando la ruta de derivación de Ethereum (m/44'/60'/0'/0). Para desplegar el token ERC-20 en la testnet de BSC, haciendo un pre-acuñado de 10M unidades del token, ejecutamos
+El resultado de la compilación se encuentra en el directorio `artifacts/contracts/token/EVMtoken.sol/`. El despliegue del smart contract lo haremos usando la segunda address del HD Wallet (derivation path `m/44'/60'/0'/0/1`) generada con el mnemonic proporcionado. Para desplegar el token ERC-20 en la testnet de BSC, haciendo un pre-acuñado de 10M unidades del token, ejecutamos
 
 ```sh
 npx hardhat run --network bsc_testnet ./scripts/deployEVMtokenPreMint.js
@@ -186,7 +186,7 @@ BESU_BRIDGE_ADDRESS=0x..
 MNEMONIC=
 ```
 
-donde sustituimos `ws://...` por la correspondiente URL del WebSocket del nodo y `0x...` por la correspondiente address del smart contract del bridge para cada red. El valor asignado a la variable `MNEMONIC` deben ser las palabras del mnemonic de una HD wallet separadas por espacios.
+donde sustituimos `ws://...` por la correspondiente URL del WebSocket del nodo y `0x...` por la correspondiente address del smart contract del bridge para cada red. El valor asignado a la variable `MNEMONIC` deben ser las palabras del mnemonic de una HD wallet separadas por espacios. El oráculo ejecutará los métodos de los smart contracts de los bridges usando la segunda address del HD Wallet (derivation path `m/44'/60'/0'/0/1`) generada con el mnemonic proporcionado.
 
 El oráculo se despliega con **docker** y **docker-compose**. Para iniciar el oráculo ejecutamos el comando
 
