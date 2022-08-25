@@ -34,8 +34,10 @@ Tras esto se pueden ejecutar los scripts para generar las claves criptográficas
 
 ```sh
 docker run --rm -v $PWD:/var irzinfante/besu:v21.1.1_ibft-reject-empty-blocks sh /var/keygen.sh
-docker run --rm -v $PWD:/var irzinfante/besu:v21.1.1_ibft-reject-empty-blocks sh /var/confgen.sh
+docker run --rm -v $PWD:/var irzinfante/besu:v21.1.1_ibft-reject-empty-blocks sh /var/confgen.sh 0x...
 ```
+
+donde `0x...` es la address que se utilizará tanto para distribuir los 21M de la divisa nativa de esta red que se pre-minan en el bloque génesis como para recibir las comisiones de las transacciones al minar nuevos bloques.
 
 Por último levantamos la red ejecutando el comando
 
